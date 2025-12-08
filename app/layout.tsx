@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: "Hardik Garg",
   description: "Portfolio of Hardik Garg",
    icons: {
-    icon: "/hg.png", 
+    icon: "/hg.ico", 
   },
 };
 
