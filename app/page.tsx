@@ -42,18 +42,31 @@ export default function Home() {
     <main className="min-h-screen bg-slate-950 text-slate-50">
       {/* NAVBAR */}
       <header className="fixed inset-x-0 top-6 z-30 flex justify-center">
-        <nav className="glass-nav flex gap-4 rounded-full px-8 py-2 text-sm">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.id}
-              href={`#${link.id}`}
-              className="rounded-full px-4 py-1 text-slate-300 hover:bg-slate-800/70 hover:text-white transition"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
+        {/* Outer container keeps nav centered and constrained */}
+        <div className="w-full max-w-5xl px-4 sm:px-6">
+          <nav
+            className="glass-nav flex items-center gap-3 rounded-full px-4 py-2 text-sm sm:gap-4 sm:px-8 sm:py-2
+                 overflow-hidden"
+            aria-label="Primary"
+          >
+            {/* Scrollable area for tiny screens */}
+            <div className="flex w-full items-center overflow-x-auto scrollbar-hide">
+              <div className="flex items-center gap-3 sm:gap-4">
+                {NAV_LINKS.map((link) => (
+                  <a
+                    key={link.id}
+                    href={`#${link.id.replace(/\s+/g, "-")}`} // sanitize id if needed
+                    className="flex-shrink-0 rounded-full px-3 py-1 text-slate-300 hover:bg-slate-800/70 hover:text-white transition text-[13px] sm:text-sm"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </nav>
+        </div>
       </header>
+
 
       <div className="mx-auto max-w-5xl px-6">
         {/* HERO */}
