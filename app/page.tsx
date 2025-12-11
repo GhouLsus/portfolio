@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-/* ---------- NAV LINKS (sanitized ids) ---------- */
+/* ---------- NAV LINKS (ids are sanitized, labels keep spacing) ---------- */
 const NAV_LINKS = [
   { id: "hardik", label: "Hardik Garg" },
   { id: "about-me", label: "About me" },
@@ -13,7 +13,7 @@ const NAV_LINKS = [
 
 const GREETINGS = ["नमस्ते", "Hello", "Hola", "Bonjour", "Ciao", "こんにちは", "안녕하세요"];
 
-/* ========== Header (desktop glass + mobile drawer) ========== */
+/* ---------- Responsive Header (desktop glass + mobile drawer) ---------- */
 function HeaderInline({ navLinks }: { navLinks: { id: string; label: string }[] }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -151,7 +151,7 @@ function HeaderInline({ navLinks }: { navLinks: { id: string; label: string }[] 
   );
 }
 
-/* ========== MAIN PAGE ========== */
+/* ========== PAGE ========== */
 export default function Home() {
   const [showTopButton, setShowTopButton] = useState(false);
   const [greetingIndex, setGreetingIndex] = useState(0);
@@ -169,7 +169,7 @@ export default function Home() {
   useEffect(() => {
     const id = setInterval(
       () => setGreetingIndex((prev) => (prev + 1) % GREETINGS.length),
-      2000
+      2000 // matches fade-cycle duration
     );
     return () => clearInterval(id);
   }, []);
@@ -250,20 +250,21 @@ export default function Home() {
               </a>
             </div>
 
-            {/* swipe / scroll down indicator */}
-            <div className="scroll-indicator" aria-hidden>
-              <span className="text-xs text-slate-400 tracking-[0.25em]">Scroll</span>
-              <div className="mt-2 scroll-indicator-circle">
-                <div className="scroll-indicator-dot" />
-              </div>
+            {/* swipe / scroll down indicator (hidden once user scrolls) */}
+            <div className="mt-8">
+              {!showTopButton && (
+                <div className="scroll-indicator">
+                  <span>Scroll</span>
+                  <div className="scroll-indicator-circle">
+                    <div className="scroll-indicator-dot" />
+                  </div>
+                </div>
+              )}
             </div>
           </section>
 
           {/* ABOUT SECTION */}
-          <section
-            id="about-me"
-            className="flex min-h-screen flex-col justify-center gap-8 pb-16 pt-24"
-          >
+          <section id="about-me" className="flex min-h-screen flex-col justify-center gap-8 pb-16 pt-24">
             <h2 className="text-lg font-semibold tracking-tight text-slate-50">About me</h2>
 
             <div className="grid gap-8 md:grid-cols-[1.4fr,1fr]">
@@ -271,19 +272,17 @@ export default function Home() {
               <div className="universal-card rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
                 <h3 className="text-sm font-semibold text-slate-50">Hey, I&apos;m Hardik 👋</h3>
                 <p className="mt-3 text-sm leading-relaxed text-slate-300">
-                  I&apos;m a final-year CSE (AI &amp; ML) student who enjoys building things that actually ship — apps people use,
-                  tools that make work easier, and systems that talk to the real world. I love working at the intersection of{" "}
-                  <span className="font-medium">AI, app development, and autonomous systems</span>, with a soft spot for aviation and drones.
+                  I&apos;m a final-year CSE (AI &amp; ML) student who enjoys building things
+                  that actually ship — apps people use, tools that make work easier, and
+                  systems that talk to the real world. I love working at the intersection of{" "}
+                  <span className="font-medium">AI, app development, and autonomous systems</span>
+                  , with a special soft spot for aviation and drones.
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-slate-300">
-                  When I&apos;m not debugging or tuning models, you&apos;ll usually find me binging aviation documentaries, exploring new places, or planning the next bike ride.
+                  When I&apos;m not debugging or tuning models, you&apos;ll usually find me
+                  binging aviation documentaries, exploring new places, or planning the next
+                  bike ride with a good playlist on.
                 </p>
-
-                <div className="mt-4 flex flex-wrap gap-2 text-[11px] text-slate-200">
-                  <span className="rounded-full border border-slate-700 bg-slate-800 px-3 py-1">App Development</span>
-                  <span className="rounded-full border border-slate-700 bg-slate-800 px-3 py-1">AI / ML</span>
-                  <span className="rounded-full border border-slate-700 bg-slate-800 px-3 py-1">Aviation &amp; Drones</span>
-                </div>
               </div>
 
               {/* education + schools */}
@@ -299,7 +298,8 @@ export default function Home() {
                     </h3>
                     <p className="text-xs text-slate-400">MIT, Manipal · Final year</p>
                     <p className="mt-1 text-xs text-slate-500">
-                      Coursework across algorithms, data structures, ML, DL, computer vision, networks and OS.
+                      Coursework across algorithms, data structures, ML, DL, computer vision,
+                      networks and OS.
                     </p>
                   </div>
                 </div>
@@ -314,7 +314,7 @@ export default function Home() {
                       </div>
                       <div>
                         <p className="font-medium">Delhi Public School, Indirapuram</p>
-                        <p className="text-xs text-slate-500">Class 10 · CBSE Certification</p>
+                        <p className="text-xs text-slate-500">Class 10 · CBSE Board Certification</p>
                       </div>
                     </li>
 
@@ -324,7 +324,7 @@ export default function Home() {
                       </div>
                       <div>
                         <p className="font-medium">Kothari International School</p>
-                        <p className="text-xs text-slate-500">Class 12 · CBSE Certification</p>
+                        <p className="text-xs text-slate-500">Class 12 · CBSE Board Certification</p>
                       </div>
                     </li>
                   </ul>
@@ -345,7 +345,7 @@ export default function Home() {
                 title="Autonomous Drone Landing on Moving Ship (Simulation)"
                 timeline="2025 · Internship"
                 description="Developed an autonomous drone landing system capable of landing on moving targets such as ships, used
-softwares to coordinate multi-vehicle simulations."
+    softwares to coordinate multi-vehicle simulations."
                 stack={[
                   "Simulation Software",
                   "3D animation Software",
@@ -372,13 +372,7 @@ softwares to coordinate multi-vehicle simulations."
                 title="Customer Churn Prediction"
                 timeline="2024 · Academic"
                 description="Hybrid churn model for telecom data combining XGBoost with a shallow neural network via meta-learning, using heavy feature engineering and evaluation."
-                stack={[
-                  "Python",
-                  "XGBoost",
-                  "TensorFlow",
-                  "scikit-learn",
-                  "Pandas",
-                ]}
+                stack={["Python", "XGBoost", "TensorFlow", "scikit-learn", "Pandas"]}
                 image="/proj4.png"
               />
             </div>
@@ -387,38 +381,57 @@ softwares to coordinate multi-vehicle simulations."
           {/* EXPERIENCE */}
           <section id="experience" className="flex min-h-screen flex-col justify-center gap-6 pb-16 pt-24">
             <h2 className="text-lg font-semibold tracking-tight text-slate-50">Experience</h2>
+
+            <h2 className="text-lg font-semibold tracking-tight text-slate-50">Internships</h2>
             <div className="space-y-4">
               <ExperienceCard
                 role="Software Research Intern"
                 company="Raphe mPhibr"
-                timeline="2025"
-                description="Working on UAV systems, simulation and automation, including ArduPilot SITL setups, QGroundControl integrations and experiment pipelines for autonomous behaviour."
+                timeline="May 2025 - July 2025"
+                description="Worked on UAV systems, simulation and automation, including SITL setups, GCS integrations and experiment pipelines for autonomous behaviour."
                 points={[
-                  "Set up multi-vehicle ArduPilot SITL environments with MAVProxy and QGC.",
-                  "Experimented with drone landing behaviour and mission planning in Gazebo.",
-                  "Built scripts and tools to streamline testing and telemetry analysis.",
+                  "Set up multi-vehicle environments.",
+                  "Experimented with drone landing behaviour and mission planning in 3D software.",
+                  "Worked on integrating an action camera with the drone.",
                 ]}
                 logoSrc="/raphe_mphibr_logo.jpeg"
                 logoAlt="Raphe mPhibr logo"
               />
               <ExperienceCard
+                role="Research Intern"
+                company="Manipal Institute of Technology"
+                timeline="June 2024 - July 2024"
+                description="Developed an end to end travel booking app using Java and Android studio."
+                points={[
+                  "Built an app using Java in which a customer can browse any flights from one place to another, book and directly get the tickets.",
+                  "Added a feature to display hotels of the destination location to the customer.",
+                  "Integrated razorpay for ease of payment.",
+                ]}
+                logoSrc="/mit_logo.jpg"
+                logoAlt="MIT logo"
+              />
+            </div>
+
+            <h2 className="mt-6 text-lg font-semibold tracking-tight text-slate-50">Volunteering</h2>
+            <div className="space-y-5 mt-3">
+              <ExperienceCard
                 role="AppDev Head"
-                company="ACM Student Chapter"
-                timeline="2024"
+                company="ACM Manipal Student Chapter"
+                timeline="2025"
                 description="Led the app development team, organised workshops and guided juniors through hands-on projects in mobile and web development."
                 points={[
                   "Conducted sessions on Flutter, Firebase and Android fundamentals.",
                   "Mentored students building real-world club projects.",
-                  "Collaborated with other teams for event and hackathon apps.",
+                  "Collaborated with other teams for events and hackathon apps.",
                 ]}
                 logoSrc="/acm.png"
                 logoAlt="ACM logo"
               />
               <ExperienceCard
-                role="Event Organizer & Backend Lead"
+                role="Core Committee"
                 company="TechTatva"
                 timeline="2024"
-                description="Organised and managed a hackathon event during TechTatva, leading backend operations and junior coordination."
+                description="Organised and managed a tech event during TechTatva, leading backend operations and junior coordination."
                 points={[
                   "Guided juniors working on backend tasks and event workflows.",
                   "Coordinated with sponsors and handled event requirements.",
@@ -428,45 +441,52 @@ softwares to coordinate multi-vehicle simulations."
                 logoAlt="TechTatva logo"
               />
               <ExperienceCard
-                role="Workshop Instructor"
-                company="ISTE Aurora"
+                role="Management Committee Member"
+                company="ISTE"
                 timeline="2024"
-                description="Hosted a 2-day workshop teaching students to build three simple apps, covering UI, state and basic deployment."
+                description="Hosted a 2-day app development workshop under ISTE’s Aurora event."
                 points={[
                   "Taught participants to build three beginner-friendly apps.",
-                  "Designed workshop content and hands-on exercises.",
-                  "Helped attendees debug and understand core concepts.",
+                  "Designed and delivered hands-on learning sessions.",
+                  "Helped attendees with coding, debugging, and core concepts.",
                 ]}
                 logoSrc="/iste.jpeg"
-                logoAlt="ISTE Aurora"
+                logoAlt="ISTE logo"
               />
             </div>
           </section>
 
           {/* CONTACT */}
-          <section id="contact" className="relative flex min-h-screen flex-col items-center justify-center pb-24 pt-24 text-center">
+          <section id="contact" className="relative flex min-h-screen flex-col items-center justify-center pb-24 pt-24">
             <div className="big-name-bg">HARDIK</div>
 
+            {/* soft background glow */}
             <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(129,140,248,0.25),_transparent_55%),radial-gradient(circle_at_bottom,_rgba(45,212,191,0.22),_transparent_60%)]" />
 
+            {/* small pill */}
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-slate-700/80 bg-slate-950/80 px-4 py-1 text-[11px] font-medium uppercase tracking-[0.22em] text-slate-300">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
               Open to roles & collaborations
             </div>
 
+            {/* heading + subtext */}
             <div className="text-center max-w-2xl">
               <h2 className="text-3xl font-semibold tracking-tight text-slate-50 sm:text-4xl md:text-5xl">
                 Let&apos;s build together.
               </h2>
               <p className="mt-3 text-sm text-slate-400 sm:text-base">
-                Whether it&apos;s drones, AI, or an app idea you want to ship, I&apos;m always up for working on things that actually go live.
+                Whether it&apos;s drones, AI, or an app idea you want to ship, I&apos;m always up
+                for working on things that actually go live.
               </p>
             </div>
 
+            {/* CTAs */}
             <div className="mt-7 flex flex-wrap items-center justify-center gap-3 text-sm">
               <button
                 type="button"
-                onClick={() => (window.location.href = "mailto:hardikgarg717@gmail.com")}
+                onClick={() => {
+                  window.location.href = "mailto:hardikgarg717@gmail.com";
+                }}
                 className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-400 px-6 py-2.5 text-sm font-medium text-white shadow-lg shadow-blue-900/60 hover:shadow-xl hover:brightness-110 transition"
               >
                 Email me
@@ -485,6 +505,7 @@ softwares to coordinate multi-vehicle simulations."
               <CopyEmailButton email="hardikgarg717@gmail.com" />
             </div>
 
+            {/* BIG quick snapshot card */}
             <div className="mt-10 w-full max-w-3xl rounded-3xl border border-slate-800 bg-slate-950/80 px-6 py-6 sm:px-8 sm:py-7 shadow-[0_26px_80px_rgba(15,23,42,0.95)] backdrop-blur-2xl">
               <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                 <div>
@@ -498,7 +519,7 @@ softwares to coordinate multi-vehicle simulations."
                 <ul className="space-y-2.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1 h-1.5 w-1.5 rounded-full bg-indigo-400" />
-                    <span>Based in Manipal / Delhi, open to remote &amp; on-site roles.</span>
+                    <span>Based in Delhi NCR, Open to working on-site Pan India and remote.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1 h-1.5 w-1.5 rounded-full bg-emerald-400" />
@@ -513,14 +534,10 @@ softwares to coordinate multi-vehicle simulations."
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="mt-1 h-1.5 w-1.5 rounded-full bg-fuchsia-400" />
-                    <span>Best way to reach me: email first, LinkedIn DM works too.</span>
+                    <span>Best way to reach me: email and LinkedIn.</span>
                   </li>
                 </ul>
               </div>
-
-              <p className="mt-5 text-[11px] text-slate-500">
-                If you have a role, internship, or a wild idea that needs to be built, send me a message — I usually reply within a day.
-              </p>
             </div>
           </section>
         </div>
@@ -551,6 +568,7 @@ type ProjectCardProps = {
 
 function ProjectCard({ title, timeline, description, stack, image }: ProjectCardProps) {
   const initial = title.charAt(0).toUpperCase();
+
   return (
     <article className="universal-card group relative overflow-hidden rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-900/80 shadow-xl shadow-black/20 transition">
       {image && (
@@ -603,7 +621,15 @@ type ExperienceCardProps = {
   logoAlt?: string;
 };
 
-function ExperienceCard({ role, company, timeline, description, points, logoSrc, logoAlt }: ExperienceCardProps) {
+function ExperienceCard({
+  role,
+  company,
+  timeline,
+  description,
+  points,
+  logoSrc,
+  logoAlt,
+}: ExperienceCardProps) {
   return (
     <article className="universal-card rounded-2xl border border-slate-800 bg-slate-900/60 p-4 md:p-5">
       <div className="flex items-start justify-between gap-4">
